@@ -1,0 +1,243 @@
+ 
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Android System</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #080b10;
+  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 65px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  color: #ff4242;
+  font-size: 27px;
+}
+
+.subtitle {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.panel {
+  background: #151b25;
+  border: 1px solid #303c4e;
+  border-radius: 15px;
+  padding: 22px;
+  margin-top: 25px;
+}
+
+.status {
+  color: #ff5555;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.bar {
+  width: 100%;
+  height: 9px;
+  background: #333;
+  border-radius: 20px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.progress {
+  width: 0%;
+  height: 100%;
+  background: #ff4242;
+  transition: width .4s;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 20px;
+  background: #d93030;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+.small {
+  color: #777;
+  font-size: 11px;
+  margin-top: 25px;
+}
+
+#reveal {
+  display: none;
+}
+
+#reveal h1 {
+  font-size: 36px;
+  color: #55ff91;
+}
+
+#reveal .logo {
+  font-size: 85px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+
+  <div class="logo">🤖</div>
+
+  <h1>ANDROID SYSTEM ERROR</h1>
+
+  <p class="subtitle">
+    Sistem mendeteksi aktivitas tidak biasa.
+    Pemeriksaan sistem diperlukan.
+  </p>
+
+  <div class="panel">
+
+    <p class="status" id="status">
+      ⚠ SYSTEM WARNING
+    </p>
+
+    <p id="message">
+      Tekan tombol untuk memulai pemeriksaan simulasi.
+    </p>
+
+    <div class="bar">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <p id="percent">0%</p>
+
+    <button id="start" onclick="startPrank()">
+      PERIKSA SISTEM
+    </button>
+
+  </div>
+
+  <p class="small">
+    Simulasi hiburan • Tidak mengakses data perangkat
+  </p>
+
+</div>
+
+<div class="container" id="reveal">
+
+  <div class="logo">🤣</div>
+
+  <h1>HAHAHAHA!</h1>
+
+  <h2>KAMU KENA PRANK!</h2>
+
+  <p class="subtitle">
+    Santai bro, HP kamu aman.
+    Ini cuma website prank buatan temanmu 😂
+  </p>
+
+  <button onclick="location.reload()">
+    PRANK LAGI
+  </button>
+
+</div>
+
+<script>
+let messages = [
+  "Memeriksa sistem...",
+  "Memindai aplikasi...",
+  "Menganalisis status perangkat...",
+  "Memeriksa keamanan...",
+  "Menyiapkan hasil pemeriksaan..."
+];
+
+function startPrank() {
+
+  const btn = document.getElementById("start");
+  const progress = document.getElementById("progress");
+  const percent = document.getElementById("percent");
+  const status = document.getElementById("status");
+  const message = document.getElementById("message");
+
+  btn.disabled = true;
+  btn.textContent = "SEDANG MEMERIKSA...";
+
+  // Getaran opsional, hanya jika browser mendukung
+  if (navigator.vibrate) {
+    navigator.vibrate(150);
+  }
+
+  let value = 0;
+
+  let timer = setInterval(() => {
+
+    value += Math.floor(Math.random() * 12) + 5;
+
+    if (value > 100) value = 100;
+
+    progress.style.width = value + "%";
+    percent.textContent = value + "%";
+
+    let index = Math.min(
+      Math.floor(value / 21),
+      messages.length - 1
+    );
+
+    message.textContent = messages[index];
+
+    if (value >= 100) {
+
+      clearInterval(timer);
+
+      status.textContent = "⚠ SYSTEM ALERT";
+      message.textContent = "Pemeriksaan selesai!";
+
+      setTimeout(() => {
+        document.getElementById("main").style.display = "none";
+        document.getElementById("reveal").style.display = "block";
+
+        if (navigator.vibrate) {
+          navigator.vibrate([100, 80, 100]);
+        }
+      }, 1200);
+    }
+
+  }, 450);
+}
+</script>
+
+</body>
+</html>
